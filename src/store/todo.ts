@@ -20,23 +20,18 @@ class Todo {
     complitedTodo(id: number) {
         this.todos = this.todos.map(todo => todo.id === id ? { ...todo, completed: !todo.completed } : todo)
     }
-    filterTodoNo() {
-        this.todos = this.todos.filter(todo => todo.completed === false) 
-    }
-    filterTodoYes() {
-        this.todos = this.todos.filter(todo => todo.completed === true)
-    }
+    get todoCompleted() {
+        return this.todos.filter((todo) => todo.completed)
+      }
+    get todoFalse() {
+        return this.todos.filter((todo) => !todo.completed)
+      }
     fetchTodo() {
         fetch('https://jsonplaceholder.typicode.com/todos')
             .then(response => response.json())
             .then(json => {
                 this.todos = [...this.todos, ...json]
             })
-    }
-    allTodo() {
-        this.todos = [
-        { id: 0, title: 'Сделать тестовое', completed: true },
-    ]
     }
 }
 

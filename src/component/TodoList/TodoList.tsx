@@ -1,32 +1,42 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import todo from '../../store/todo';
+import TodoItem from '../TodoItem/TodoItem';
 
-const TodoList = observer(() => {
+const TodoList: React.FC = observer(() => {
+    const [todoList, setTodo] = React.useState(true)
+    const [todoFalse, setTodoFalse] = React.useState(false)
+    const [todoTrue, setTodotrue] = React.useState(false)
+    const allTodo = () => {
+        setTodo(true)
+        setTodoFalse(false)
+        setTodotrue(false)
+    }
+    const setFalseTodo = () => {
+        setTodoFalse(true)
+        setTodotrue(false)
+        setTodo(false)
+    }
+    const setTrueTodo = () => {
+        setTodotrue(true)
+        setTodoFalse(false)
+        setTodo(false)
+    }
     return (
         <>
-            <p className="fs-2 text-center">Задания</p>
-            {todo.todos.map(t =>
-            <div key={t.id} className="card card-header m-2">
-                <ul  className="list-group list-group-horizontal rounded-0 bg-transparent">
-                    <li
-                        className="list-group-item d-flex align-items-center ps-0 pe-3 py-1 rounded-0 border-0 bg-transparent">
-                        <div className="form-check">
-                            <input className="form-check-input me-0" type="checkbox"
-                                aria-label="..." onChange={() => todo.complitedTodo(t.id)} checked={t.completed}/>
-                        </div>
-                    </li>
-                    <li
-                        className="list-group-item px-3 py-1 d-flex align-items-center flex-grow-1 border-0 bg-transparent">
-                        <p className="lead fw-normal mb-0">{t.title}</p>
-                    </li>
-                    <li className="list-group-item ps-3 pe-0 py-1 rounded-0 border-0 bg-transparent">
-                        <div className="d-flex flex-row justify-content-end mb-1">
-                            <button onClick={() => todo.remoteTodo(t.id)} type="button" className="btn btn-outline-danger">Удалить</button>
-                        </div>
-                    </li>
-                </ul>
-                </div>)}
+            <div className="d-grid gap-2 d-md-flex justify-content-md-end p-5">
+                <button type="button" className="btn btn-dark" onClick={() => { allTodo() }}>Все</button>
+                <button type="button" className="btn btn-dark" onClick={() => { setTrueTodo() }}>Выполненные</button>
+                <button type="button" className="btn btn-dark" onClick={() => { setFalseTodo() }}>Не выполненные</button>
+                <button type="button" className="btn btn-dark" onClick={() => todo.fetchTodo()}>Получить данные с сервера</button>
+            </div>
+            <p className="fs-2 text-center p-5">Задания</p>
+            {todoFalse ? <>{todo.todoFalse.map(t =>
+                <TodoItem t={t} key={t.id} />)}</> : ''}
+            {todoTrue ? <>{todo.todoCompleted.map(t =>
+                <TodoItem t={t} key={t.id} />)}</> : ''}
+            {todoList ? <>{todo.todos.map(t =>
+                <TodoItem t={t} key={t.id} />)}</> : ''}
         </>
     );
 });
