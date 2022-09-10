@@ -10,10 +10,7 @@ export type TodoType = {
 type TodoProps = {
     t: TodoType
 }
-
-
 const TodoItem = ({t}:TodoProps) => {
-    console.log(t)
     return (
         <div className="card p-4 m-4">
                 <ul  className="list-group list-group-horizontal rounded-0 bg-transparent">
