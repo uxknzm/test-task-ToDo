@@ -31,6 +31,7 @@ const TodoList: React.FC = observer(() => {
                 <button type="button" className="btn btn-dark" onClick={() => todo.fetchTodo()}>Получить данные с сервера</button>
             </div>
             <p className="fs-2 text-center p-5">Задания</p>
+            {todo.todos.length < 1 ? <p className="fs-4 text-center p-5">У вас нет заданий 🥰</p>: ''}
             {todoFalse ? <>{todo.todoFalse.map(t =>
                 <TodoItem t={t} key={t.id} />)}</> : ''}
             {todoTrue ? <>{todo.todoCompleted.map(t =>
